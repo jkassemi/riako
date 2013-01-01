@@ -50,6 +50,25 @@ func TestPut(t *testing.T){
   }
 }
 
+func TestCreate(t *testing.T){
+  d, _ := New(riak_addr, search_addr)
+
+  v := &TestObject{A: "Hello"}
+
+  key, e := d.Create("test-bucket", v)
+
+  if e != nil {
+    t.Fatal("Could not create record: " + e.Error())
+  }
+
+  var o TestObject
+  e = d.Get("test-bucket", key, &o)
+
+  if e != nil {
+    t.Fatal("Could not retrieve record: " + e.Error())
+  }
+}
+
 func TestSearch(t *testing.T){
   d, _ := New(riak_addr, search_addr)
 

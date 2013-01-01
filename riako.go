@@ -147,6 +147,17 @@ func (d *Database) Put(bucket string, key string, value interface{}) (error) {
   return nil
 }
 
+func (d *Database) Create(bucket string, value interface{}) (string, error) {
+  key := d.UnusedKey(bucket, 32)
+
+  if e := d.Put(bucket, key, value); e != nil {
+    return "", e
+  }
+
+  return key, nil
+}
+
+
 type SearchQuery struct {
   Index     string
   Query     string
