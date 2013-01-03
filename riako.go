@@ -1,7 +1,6 @@
 package riako
 
 import (
-  "pool"
   "errors"
   "time"
   "strings"
@@ -12,6 +11,7 @@ import (
   "net/url"
   "net/http"
   "encoding/json"
+  "github.com/jkassemi/pool"
   "github.com/mrb/riakpbc"
 )
 
