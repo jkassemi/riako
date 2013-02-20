@@ -69,8 +69,28 @@ func TestCreate(t *testing.T){
   }
 }
 
+func TestDelete(t *testing.T){
+  d, _ := New(riak_addr, search_addr)
+
+  v := &TestObject{A: "Hello"}
+
+  d.Put("test-bucket", "2", v)
+
+  if e := d.Delete("test-bucket", "2"); e != nil {
+    t.Fatal("Could not delete: " + e.Error())
+  }
+
+  var o TestObject
+  if e := d.Get("test-bucket", "2", &o); e == nil {
+    t.Fatal("Didn't delete record")
+  }
+}
+
+
 func TestSearch(t *testing.T){
   d, _ := New(riak_addr, search_addr)
+
+  d.MakeSearchable("test-bucket")
 
   v := &TestObject{A: "1", B: "2"}
   d.Put("test-bucket", "1", v)

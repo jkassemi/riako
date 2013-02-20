@@ -157,6 +157,18 @@ func (d *Database) Create(bucket string, value interface{}) (string, error) {
   return key, nil
 }
 
+func (d *Database) Delete(bucket string, key string) (error){
+  c, e := d.getConnection()
+
+  if e != nil {
+    return e
+  }
+
+  _, e = c.DeleteObject(bucket, key)
+
+  return e
+}
+
 
 type SearchQuery struct {
   Index     string
@@ -233,12 +245,12 @@ func (d *Database) Search(query *SearchQuery) (*SearchResult, error){
   url := query.endpoint(d)
 
   raw_response, err := http.Get(url)
-  defer raw_response.Body.Close()
 
   if err != nil {
     return nil, err
   }
 
+  defer raw_response.Body.Close()
   response_data, err := ioutil.ReadAll(raw_response.Body)
 
   if err != nil {
