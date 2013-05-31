@@ -12,7 +12,7 @@ import (
   "net/http"
   "encoding/json"
   "github.com/jkassemi/pool"
-  "github.com/mrb/riakpbc"
+  "github.com/jkassemi/riakpbc"
 )
 
 type Database struct {
